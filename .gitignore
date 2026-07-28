@@ -9,9 +9,9 @@ env/
 dist/
 build/
 .ipynb_checkpoints/
-*.keras
-*.h5
-*.joblib
+# modelos ficam versionados no repo
+# *.pt
+# *.joblib
 data/*.csv
 data/*.parquet
 .DS_Store

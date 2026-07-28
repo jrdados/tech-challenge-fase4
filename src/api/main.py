@@ -6,7 +6,7 @@ from fastapi import FastAPI, HTTPException
 from prometheus_fastapi_instrumentator import Instrumentator
 
 from src.api.schemas import PredictRequest, PredictResponse, HealthResponse, MetricsResponse
-from src.model.lstm import load_model
+from src.model.lstm import load_model, predict_one
 from src.model.preprocessing import scale_input, inverse_scale, WINDOW_SIZE
 
 _state: dict = {
@@ -35,7 +35,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="LSTM Stock Prediction API",
-    description="API para previsão do preço de fechamento da ação ITUB4 usando LSTM.",
+    description="API para previsão do preço de fechamento da ação ITUB4 usando LSTM (PyTorch).",
     version="1.0.0",
     lifespan=lifespan,
 )
@@ -99,7 +99,7 @@ def predict(request: PredictRequest):
 
     for _ in range(request.steps):
         X = scale_input(window[-WINDOW_SIZE:], scaler)
-        pred_scaled = model.predict(X, verbose=0)[0][0]
+        pred_scaled = predict_one(model, X)
         pred_value = inverse_scale(pred_scaled, scaler)
         predictions.append(round(pred_value, 4))
         window.append(pred_value)
