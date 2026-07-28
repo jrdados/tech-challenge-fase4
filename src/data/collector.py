@@ -11,7 +11,10 @@ def download_stock_data(
     end_date: str | None = None,
 ) -> pd.DataFrame:
     df = yf.download(symbol, start=start_date, end=end_date, auto_adjust=True)
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = df.columns.get_level_values(0)
     df = df[["Close", "Open", "High", "Low", "Volume"]].copy()
+    df = df.apply(pd.to_numeric, errors="coerce")
     df.dropna(inplace=True)
     return df
 
