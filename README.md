@@ -2,6 +2,14 @@
 
 Previsão do preço de fechamento da ação **ITUB4.SA (Itaú Unibanco)** usando redes neurais **LSTM**, com deploy via **FastAPI + Docker**.
 
+## API em produção
+
+🔗 https://tech-challenge-fase4-i64n.onrender.com
+
+Documentação interativa (Swagger): https://tech-challenge-fase4-i64n.onrender.com/docs
+
+> Deploy no plano free do Render — o serviço "dorme" após 15 min sem uso; a primeira requisição após esse período pode levar ~30-50s para responder.
+
 ## Estrutura
 
 ```
